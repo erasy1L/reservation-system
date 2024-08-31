@@ -1,0 +1,196 @@
+basePath: /api/v1
+definitions:
+  reservation.Request:
+    properties:
+      end_time:
+        example: 29-08-2024 14:00
+        type: string
+      room_id:
+        example: "1"
+        type: string
+      start_time:
+        example: 29-08-2024 13:00
+        type: string
+    type: object
+  reservation.UpdateRequest:
+    properties:
+      end_time:
+        example: 29-08-2024 14:00
+        type: string
+      room_id:
+        example: "1"
+        type: string
+      start_time:
+        example: 29-08-2024 13:00
+        type: string
+    type: object
+  response.BadRequestResponse:
+    properties:
+      data: {}
+      message:
+        example: Invalid input provided
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
+  response.BaseObject:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  response.InternalServerErrorResponse:
+    properties:
+      data: {}
+      message:
+        example: An unexpected error occurred
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a simple API project
+  title: Room reservation system
+  version: "1.0"
+paths:
+  /reservations:
+    post:
+      consumes:
+      - application/json
+      description: Create new reservation
+      parameters:
+      - description: Reservation object to be added
+        in: body
+        name: reservation
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.Request'
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.BadRequestResponse'
+        "409":
+          description: Overlapping reservation
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.InternalServerErrorResponse'
+      summary: Create new reservation
+      tags:
+      - Reservations
+  /reservations/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete reservation
+      parameters:
+      - description: Reservation id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.BadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.InternalServerErrorResponse'
+      summary: Delete reservation
+      tags:
+      - Reservations
+    get:
+      consumes:
+      - application/json
+      description: Get individual reservation
+      parameters:
+      - description: Reservation id
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.BadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.InternalServerErrorResponse'
+      summary: Get individual reservation
+      tags:
+      - Reservations
+    patch:
+      consumes:
+      - application/json
+      description: Update reservation
+      parameters:
+      - description: Reservation id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Reservation details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/reservation.UpdateRequest'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.BadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.InternalServerErrorResponse'
+      summary: Update reservation
+      tags:
+      - Reservations
+  /reservations/room/{roomID}:
+    get:
+      consumes:
+      - application/json
+      description: List reservations for a room
+      parameters:
+      - description: Room id
+        in: path
+        name: roomID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.BaseObject'
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.InternalServerErrorResponse'
+      summary: List reservations for a room
+      tags:
+      - Reservations
+swagger: "2.0"
