@@ -38,9 +38,6 @@ For running the tests:
 
 Additionally there is a [github action for running tests](./.github/workflows/test.yaml) for each push in repository
 
-![swagger](https://github.com/user-attachments/assets/c45194d6-2705-451e-a877-eb265313abc4)
-
-
 # Libraries
 
 - [swaggo](https://github.com/swaggo/swag) to automatically generate RESTful API documentation with Swagger 2.0. 
