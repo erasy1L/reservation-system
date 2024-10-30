@@ -13,7 +13,7 @@ For accessing and running the API locally follow these steps:
 
 - Clone the repository and cd:
 ```
-	git clone https://github.com/erazr/reservation-system
+	git clone https://github.com/erasy1L/reservation-system
 	cd reservation-system
 ```
 
